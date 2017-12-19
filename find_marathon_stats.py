@@ -45,11 +45,11 @@ class HealthJsonCollector(object):
             logging.info(mm)           
             mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
             metric = Metric( mm_removed_colons,'', 'gauge')
-            if type(marathonmetrics['gauges'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_colons, value=marathonmetrics['gauges'][mm][u'count'],
+            if type(marathonmetrics['gauges'][mm][u'mean']) != list:
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['gauges'][mm][u'mean'],
                               labels={'name': mm})
               yield metric
-              logging.info("%s:%d" % (mm, marathonmetrics['gauges'][mm][u'count']))
+              logging.info("%s:%d" % (mm, marathonmetrics['gauges'][mm][u'mean']))
 
             
          for mm in marathonmetrics['counters']:
@@ -66,11 +66,11 @@ class HealthJsonCollector(object):
             logging.info(mm)           
             mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
             metric = Metric( mm_removed_colons,'', 'counter')
-            if type(marathonmetrics['min-max-counters'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_colons, value=marathonmetrics['min-max-counters'][mm][u'count'],
+            if type(marathonmetrics['min-max-counters'][mm][u'max']) != list:
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['min-max-counters'][mm][u'max'],
                               labels={'name': mm})
               yield metric
-              logging.info("%s:%d" % (mm, marathonmetrics['min-max-counters'][mm][u'count']))
+              logging.info("%s:%d" % (mm, marathonmetrics['min-max-counters'][mm][u'max']))
 
          for mm in marathonmetrics['histograms']:
             logging.info(mm)           
