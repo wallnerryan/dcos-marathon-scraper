@@ -43,11 +43,10 @@ class HealthJsonCollector(object):
          marathonmetrics=r.json()
          for mm in marathonmetrics['gauges']:
             logging.info(mm)           
-            mm_removed_periods = mm.replace(".", "_")
-            mm_removed_dashes = mm_removed_periods.replace("-", "_")
-            metric = Metric( mm_removed_dashes,'', 'gauge')
+            mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
+            metric = Metric( mm_removed_colons,'', 'gauge')
             if type(marathonmetrics['gauges'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_dashes, value=marathonmetrics['gauges'][mm][u'count'],
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['gauges'][mm][u'count'],
                               labels={'name': mm})
               yield metric
               logging.info("%s:%d" % (mm, marathonmetrics['gauges'][mm][u'count']))
@@ -55,44 +54,40 @@ class HealthJsonCollector(object):
             
          for mm in marathonmetrics['counters']:
             logging.info(mm)           
-            mm_removed_periods = mm.replace(".", "_")
-            mm_removed_dashes = mm_removed_periods.replace("-", "_")
-            metric = Metric( mm_removed_dashes,'', 'counter')
+            mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
+            metric = Metric( mm_removed_colons,'', 'counter')
             if type(marathonmetrics['counters'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_dashes, value=marathonmetrics['counters'][mm][u'count'],
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['counters'][mm][u'count'],
                               labels={'name': mm})
               yield metric
               logging.info("%s:%d" % (mm, marathonmetrics['counters'][mm][u'count']))
 
          for mm in marathonmetrics['min-max-counters']:
             logging.info(mm)           
-            mm_removed_periods = mm.replace(".", "_")
-            mm_removed_dashes = mm_removed_periods.replace("-", "_")
-            metric = Metric( mm_removed_dashes,'', 'counter')
+            mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
+            metric = Metric( mm_removed_colons,'', 'counter')
             if type(marathonmetrics['min-max-counters'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_dashes, value=marathonmetrics['min-max-counters'][mm][u'count'],
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['min-max-counters'][mm][u'count'],
                               labels={'name': mm})
               yield metric
               logging.info("%s:%d" % (mm, marathonmetrics['min-max-counters'][mm][u'count']))
 
          for mm in marathonmetrics['histograms']:
             logging.info(mm)           
-            mm_removed_periods = mm.replace(".", "_")
-            mm_removed_dashes = mm_removed_periods.replace("-", "_")
-            metric = Metric( mm_removed_dashes,'', 'counter')
+            mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
+            metric = Metric( mm_removed_colons,'', 'counter')
             if type(marathonmetrics['histograms'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_dashes, value=marathonmetrics['histograms'][mm][u'count'],
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['histograms'][mm][u'count'],
                               labels={'name': mm})
               yield metric
               logging.info("%s:%d" % (mm, marathonmetrics['histograms'][mm][u'count']))
 
          for mm in marathonmetrics['system-metric']:
             logging.info(mm)
-            mm_removed_periods = mm.replace(".", "_")
-            mm_removed_dashes = mm_removed_periods.replace("-", "_")
-            metric = Metric( mm_removed_dashes,'', 'counter')
+            mm_removed_colons = mm.replace(".", "_").replace("-", "_").replace(":", "_").replace('(', '_').replace(')', '_')
+            metric = Metric( mm_removed_colons,'', 'counter')
             if type(marathonmetrics['system-metric'][mm][u'count']) != list:
-              metric.add_sample(mm_removed_dashes, value=marathonmetrics['system-metric'][mm][u'count'],
+              metric.add_sample(mm_removed_colons, value=marathonmetrics['system-metric'][mm][u'count'],
                               labels={'name': mm})
               yield metric
               logging.info("%s:%d" % (mm, marathonmetrics['system-metric'][mm][u'count'])) 
